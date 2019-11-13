@@ -21,19 +21,28 @@ namespace Inlämning1.WebUI.Models
             Accounts.Add(new Account { AccountID = 3, CustomerID = 3, Balance = 6123.84M });
         }
 
-        public void Transfer()
+        public void Withdraw(decimal amount, Account account)
         {
-
+            if (amount > 0 && account.Balance >= amount)
+            {
+                account.Balance -= amount;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
-        public void Withdraw()
+        public void Deposit(decimal amount, Account account)
         {
-
-        }
-
-        public void Deposit()
-        {
-
+            if (amount > 0)
+            {
+                account.Balance += amount;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
