@@ -26,14 +26,28 @@ namespace Inlämning1.WebUI.Models
 
         }
 
-        public void Withdraw()
+        public void Withdraw(int amount, Account account)
         {
-
+            if (amount > 0 && account.Balance > 0)
+            {
+                account.Balance -= amount;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
-        public void Deposit()
+        public void Deposit(int amount, Account account)
         {
-
+            if (amount > 0)
+            {
+                account.Balance += amount;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
