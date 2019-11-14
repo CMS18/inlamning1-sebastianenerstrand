@@ -69,5 +69,38 @@ namespace Inlämning1.WebUI.Controllers
             }
             return RedirectToAction("index");
         }
+
+        [HttpGet]
+        public IActionResult Transfer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Transfer(int accountFromId, int accountToId, decimal amountToTransfer)
+        {
+            var accountIdFrom = _repo.Accounts.Where(a => a.AccountID == accountFromId).SingleOrDefault();
+            var accountIdTo = _repo.Accounts.Where(a => a.AccountID == accountToId).SingleOrDefault();
+
+            if (accountIdFrom != null && accountIdFrom != null)
+            {
+                try
+                {
+                    accountIdFrom.Transfer(accountIdFrom, accountIdTo, amountToTransfer);
+                    TempData["balance"] = "Transfer successful, the new balance on the from account is: " + accountIdFrom.Balance + "sek and the new balance on the to caaount is: " + accountIdTo.Balance + "sek.";
+
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    TempData["error"] = "The amount must be higher than the balance on the fromaccount";
+                }
+            }
+            else
+            {
+                TempData["error"] = "Invalid accountid, please try again with correct accountid:s";
+            }
+
+            return RedirectToAction();
+        }
     }
 }
