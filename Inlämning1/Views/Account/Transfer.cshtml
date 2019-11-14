@@ -1,0 +1,19 @@
+﻿@TempData["error"]
+@TempData["balance"]
+<br/>
+
+<form asp-controller="Account" method="post">
+    <label>Transer from account: </label>
+    <input name="accountFromId" />
+    <br />
+
+    <label>Transfer to account:</label>
+    <input name="accountToId" />
+    <br />
+
+    <label>Amount to transfer</label>
+    <input name="amountToTransfer" />
+    <br />
+
+    <button type="submit" asp-action="Transfer">Transfer</button>
+</form>
