@@ -4,26 +4,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Inlämning1.Models;
+using Inlämning1.WebUI.Models;
+using Inlämning1.WebUI.Models.ViewModels;
 
 namespace Inlämning1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly BankRepository _repo;
+
+        public HomeController(BankRepository repo)
+        {
+            _repo = repo;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = new CustomerAccountViewModel();
+            model.Accounts = _repo.Accounts;
+            model.Customers = _repo.Customers;
+
+            return View(model);
         }
 
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
